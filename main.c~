@@ -20,7 +20,7 @@ int main(int argc, char * argv[]){
 		int ch, i, j, k, num_points, index1, index2, num_iters;
 		double beta;
 
-		beta=0.44;
+		beta=0.35;
 		num_iters=100;
 
 		graph = fopen(argv[1], "r");

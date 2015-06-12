@@ -11,7 +11,7 @@ int update_site(double beta, int spin, int spin1, int spin2, int spin3);
 int main(int argc, char * argv[]){
 
 	if(argc != 2){
-		printf("correct usage: %s filename\n", argv[0]);
+		printf("\n ERROR: correct usage: %s filename\n", argv[0]);
 		return 1;
 	}else{
 		srand48(time(NULL));
