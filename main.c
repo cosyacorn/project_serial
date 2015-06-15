@@ -17,10 +17,10 @@ int main(int argc, char * argv[]){
 		srand48(time(NULL));
 		// READ GRAPH FROM FILE
 		FILE * graph;
-		int ch, i, j, k, num_points, index1, index2, num_iters;
-		double beta;
+		int ch, i, j, k, num_points, index1, index2, num_iters, act, prod;
+		double beta, mag;
 
-		beta=0.35;
+		beta=0.5;
 		num_iters=100;
 
 		graph = fopen(argv[1], "r");
@@ -92,11 +92,44 @@ int main(int argc, char * argv[]){
 			for(i=0;i<num_points;i++){
 				b_spin[i] = update_site(beta, b_spin[i], a_spin[b[i][0]], a_spin[b[i][1]], a_spin[b[i][2]]);
 			}
-			printf("\nupdate %d:\n", k+1);
+			printf("Update %d:\n", k+1);
 			print_spins(num_points, a_spin, b_spin);
-			printf("\n");
+			//printf("\n");
+			
+			//calculate the magentisation
+			mag=0;
+			for(i=0;i<num_points;i++){
+				mag+=((double)a_spin[i]+(double)b_spin[i]);
+			}
+
+			mag/=(double)num_points;
+			printf("Magnetisation: %f\n", mag);
+
+			//calculate the action
+			act=0;
+			for(i=0;i<num_points;i++){
+				prod=0;
+				for(j=0;j<3;j++){
+					prod+=b_spin[a[i][j]];
+				}
+				act+=1-a_spin[i]*prod;
+			}
+			printf("Action: %d\n", act);
 		}
+
+		for(i=0;i<num_points;i++){
+			free(a[i]);
+			free(b[i]);
+		}
+
+		free(a);
+		free(b);
+	
+		free(a_spin);
+		free(b_spin);
 	}
+
+
 	return 0;
 }
 
